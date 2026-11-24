@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "slug": "tow-float-20l",
+    "name": "Tow float, 20 litre",
+    "category": "visibility",
+    "priceCents": 3400,
+    "stock": 42,
+    "description": "Two air chambers and a dry pocket for keys and a phone. Clips to the waist and trails a metre behind you."
+  },
+  {
+    "id": 2,
+    "slug": "strobe-cap-clip",
+    "name": "Cap strobe",
+    "category": "visibility",
+    "priceCents": 1800,
+    "stock": 64,
+    "description": "Clips under a swim cap strap. Three flash patterns, visible from 800 metres on a clear night."
+  },
+  {
+    "id": 3,
+    "slug": "silicone-cap-bright",
+    "name": "Bright silicone cap",
+    "category": "visibility",
+    "priceCents": 1200,
+    "stock": 88,
+    "description": "Thick silicone in a colour that shows up against grey water."
+  },
+  {
+    "id": 4,
+    "slug": "thermal-cap-3mm",
+    "name": "Thermal cap, 3 mm",
+    "category": "warmth",
+    "priceCents": 2900,
+    "stock": 23,
+    "description": "Fleece-lined neoprene with a chin strap. For water below 12 degrees."
+  },
+  {
+    "id": 5,
+    "slug": "neoprene-gloves-3mm",
+    "name": "Swim gloves, 3 mm",
+    "category": "warmth",
+    "priceCents": 3600,
+    "stock": 31,
+    "description": "Smooth palm for a clean catch, long cuff to keep flushing down."
+  },
+  {
+    "id": 6,
+    "slug": "neoprene-socks-3mm",
+    "name": "Swim socks, 3 mm",
+    "category": "warmth",
+    "priceCents": 3200,
+    "stock": 35,
+    "description": "Taped seams and a grippy sole for getting across shingle."
+  },
+  {
+    "id": 7,
+    "slug": "low-light-goggles",
+    "name": "Low-light goggles",
+    "category": "eyewear",
+    "priceCents": 2600,
+    "stock": 47,
+    "description": "Clear amber lens for dawn swims, wide gasket that stays put in chop."
+  },
+  {
+    "id": 8,
+    "slug": "polarised-goggles",
+    "name": "Polarised goggles",
+    "category": "eyewear",
+    "priceCents": 4400,
+    "stock": 19,
+    "description": "Cuts glare on flat, sunny water so you can sight the next buoy."
+  },
+  {
+    "id": 9,
+    "slug": "changing-robe",
+    "name": "Changing robe",
+    "category": "shore",
+    "priceCents": 11900,
+    "stock": 9,
+    "description": "Windproof shell, deep fleece, sleeves wide enough to pull your arms inside."
+  },
+  {
+    "id": 10,
+    "slug": "shingle-mat",
+    "name": "Shingle mat",
+    "category": "shore",
+    "priceCents": 2400,
+    "stock": 28,
+    "description": "Stand on it to change, then cinch the edge to carry your wet kit home."
+  },
+  {
+    "id": 11,
+    "slug": "tide-clock",
+    "name": "Tide clock",
+    "category": "shore",
+    "priceCents": 5800,
+    "stock": 1,
+    "description": "One hand, one job: hours to the next high water. Last one until the maker's spring batch."
+  },
+  {
+    "id": 12,
+    "slug": "flask-750",
+    "name": "Steel flask, 750 ml",
+    "category": "shore",
+    "priceCents": 2700,
+    "stock": 52,
+    "description": "Keeps tea hot for nine hours. The cup is sized for gloved hands."
+  }
+]

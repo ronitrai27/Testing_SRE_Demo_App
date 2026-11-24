@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "email": "admin@saltmarket.test",
+    "name": "Ines Marlow",
+    "role": "admin",
+    "password": "demo-admin-pass"
+  },
+  {
+    "id": 2,
+    "email": "alice@saltmarket.test",
+    "name": "Alice Penrose",
+    "role": "customer",
+    "password": "demo-alice-pass"
+  },
+  {
+    "id": 3,
+    "email": "bob@saltmarket.test",
+    "name": "Bob Trevanion",
+    "role": "customer",
+    "password": "demo-bob-pass"
+  }
+]
