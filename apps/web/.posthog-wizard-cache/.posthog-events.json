@@ -1,7 +1,0 @@
-[
-  {
-    "event": "shop_error_retry_clicked",
-    "description": "Visitor retries loading the shop from its error state.",
-    "file": "src/app/error.tsx"
-  }
-]

@@ -1,8 +1,21 @@
 "use client";
 
+import * as Sentry from "@sentry/nextjs";
 import posthog from "posthog-js";
+import { useEffect } from "react";
 
-export default function ErrorPage({ reset }: { error: Error; reset: () => void }) {
+export default function ErrorPage({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  useEffect(() => {
+    // A digest means the error happened on the server, which already reported it.
+    if (!error.digest) Sentry.captureException(error);
+  }, [error]);
+
   const handleRetry = () => {
     posthog.capture("shop_error_retry_clicked");
     reset();

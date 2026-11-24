@@ -1,4 +1,3 @@
-import * as Sentry from "@sentry/node";
 import cookieParser from "cookie-parser";
 import express, { type Express } from "express";
 import helmet from "helmet";
@@ -7,7 +6,7 @@ import { createCatalogModule } from "./modules/catalog/index.ts";
 import { createHealthRouter } from "./modules/health/index.ts";
 import { createIdentityModule } from "./modules/identity/index.ts";
 import type { Database } from "./platform/database/index.ts";
-import { errorHandler, isReportable, routeNotFound } from "./platform/http/index.ts";
+import { errorHandler, routeNotFound } from "./platform/http/index.ts";
 import { type Logger, requestLogger } from "./platform/logging/logger.ts";
 
 export type AppDependencies = { db: Database; env: Env; logger: Logger };
@@ -30,7 +29,6 @@ export function createApp({ db, env, logger }: AppDependencies): Express {
   app.use("/v1/products", catalog.router);
 
   app.use(routeNotFound);
-  Sentry.setupExpressErrorHandler(app, { shouldHandleError: isReportable });
   app.use(errorHandler);
   return app;
 }

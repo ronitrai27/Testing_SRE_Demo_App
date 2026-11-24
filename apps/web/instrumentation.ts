@@ -33,9 +33,7 @@ export const loggerProvider = new LoggerProvider({
     : [],
 });
 
-// Use this logger only for log records intentionally exported to PostHog.
 export const posthogLogger = loggerProvider.getLogger("saltmarket-posthog-exporter");
 
-export function register() {
-  // This provider is intentionally used directly rather than replacing global loggers.
-}
+// `next dev` loads this file and production builds load src/instrumentation.ts.
+export { onRequestError, register } from "./src/instrumentation";
