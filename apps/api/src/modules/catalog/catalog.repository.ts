@@ -55,7 +55,7 @@ export function createCatalogRepository(db: Database) {
           description: patch.description ?? null,
           category: patch.category ?? null,
           priceCents: patch.priceCents ?? null,
-          stock: patch.stock || null,
+          stock: patch.stock ?? null,
         }),
       );
     },
