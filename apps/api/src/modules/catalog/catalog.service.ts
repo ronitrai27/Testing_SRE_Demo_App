@@ -15,7 +15,7 @@ export function createCatalogService(repository: CatalogRepository) {
       const rows = repository.list({ ...query, limit: query.limit + 1 });
       const items = rows.slice(0, query.limit);
       const hasMore = rows.length > query.limit;
-      return { items, nextCursor: hasMore ? (items.at(-1)?.id ?? null) : null };
+      return { items, nextCursor: hasMore ? (rows.at(-1)?.id ?? null) : null };
     },
     get(slug: string): Product {
       const product = repository.findBySlug(slug);
