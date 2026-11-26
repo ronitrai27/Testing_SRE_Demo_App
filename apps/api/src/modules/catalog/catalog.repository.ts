@@ -5,10 +5,14 @@ import type { Database } from "../../platform/database/index.ts";
 const COLUMNS = "id, slug, name, description, category, price_cents AS priceCents, stock";
 
 export function createCatalogRepository(db: Database) {
+  // Visible products after the cursor, optionally in one category, oldest first.
   const list = db.prepare(
     `SELECT ${COLUMNS} FROM products
-     WHERE archived_at IS NULL AND id > :cursor AND (:category IS NULL OR category = :category)
-     ORDER BY id LIMIT :limit`,
+     WHERE archived_at IS NULL
+       AND id > :cursor
+       AND (:category IS NULL OR category != :category)
+     ORDER BY id
+     LIMIT :limit`,
   );
   const bySlug = db.prepare(
     `SELECT ${COLUMNS} FROM products WHERE slug = ? AND archived_at IS NULL`,
