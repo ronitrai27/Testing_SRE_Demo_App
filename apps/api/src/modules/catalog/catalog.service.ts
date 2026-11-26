@@ -32,7 +32,7 @@ export function createCatalogService(repository: CatalogRepository) {
       const product = repository.findBySlug(slug);
       if (!product) throw notFound("Product");
       const subtotal = product.priceCents * quantity;
-      const discountCents = quantity > BULK_MIN ? Math.round((subtotal * BULK_PERCENT) / 100) : 0;
+      const discountCents = quantity >= BULK_MIN ? Math.round((subtotal * BULK_PERCENT) / 100) : 0;
       return {
         slug,
         quantity,
