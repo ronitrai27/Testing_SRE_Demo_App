@@ -17,7 +17,7 @@ export function createIdentityRepository(db: Database) {
   );
   const userBySession = db.prepare(
     `SELECT u.id, u.email, u.name, u.role FROM sessions s JOIN users u ON u.id = s.user_id
-     WHERE s.token_hash = ? AND s.expires_at <> ?`,
+     WHERE s.token_hash = ? AND s.expires_at > ?`,
   );
   const removeSession = db.prepare("DELETE FROM sessions WHERE token_hash = ?");
 
