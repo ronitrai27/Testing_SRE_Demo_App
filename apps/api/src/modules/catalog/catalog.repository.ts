@@ -10,7 +10,7 @@ export function createCatalogRepository(db: Database) {
     `SELECT ${COLUMNS} FROM products
      WHERE archived_at IS NULL
        AND id > :cursor
-       AND (:category IS NULL OR category != :category)
+       AND (:category IS NULL OR category = :category)
      ORDER BY id
      LIMIT :limit`,
   );
