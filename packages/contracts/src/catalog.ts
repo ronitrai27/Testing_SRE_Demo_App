@@ -33,6 +33,22 @@ export const ProductQuery = z.object({
 });
 export type ProductQuery = z.infer<typeof ProductQuery>;
 
+export const QuoteQuery = z.object({
+  quantity: z.coerce.number().int().min(1).max(500),
+});
+export type QuoteQuery = z.infer<typeof QuoteQuery>;
+
+/** What a quantity of one product costs, with the bulk discount applied. */
+export const Quote = z.object({
+  slug: Slug,
+  quantity: z.int().positive(),
+  unitCents: Cents,
+  discountCents: Cents,
+  totalCents: Cents,
+  inStock: z.boolean(),
+});
+export type Quote = z.infer<typeof Quote>;
+
 export const ProductCreate = z.strictObject({
   slug: Slug,
   name: z.string().trim().min(1).max(120),

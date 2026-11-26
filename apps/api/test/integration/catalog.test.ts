@@ -1,4 +1,4 @@
-import { ProductPage } from "@saltmarket/contracts";
+import { ProductPage, Quote } from "@saltmarket/contracts";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { ADMIN, ALICE, startApp, type TestApp } from "../support/harness.ts";
 
@@ -28,6 +28,29 @@ describe("catalog", () => {
     }
     expect(seen).toHaveLength(12);
     expect(new Set(seen).size).toBe(12);
+  });
+
+  it("quotes a price for a quantity", async () => {
+    const res = await app.request("GET", "/v1/products/strobe-cap-clip/quote?quantity=2");
+    expect(res.status).toBe(200);
+    expect(Quote.parse(await res.json())).toEqual({
+      slug: "strobe-cap-clip",
+      quantity: 2,
+      unitCents: 1800,
+      discountCents: 0,
+      totalCents: 3600,
+      inStock: true,
+    });
+  });
+
+  it("takes 10% off an order of 10 or more", async () => {
+    const res = await app.request("GET", "/v1/products/strobe-cap-clip/quote?quantity=10");
+    expect(Quote.parse(await res.json())).toMatchObject({ discountCents: 1800, totalCents: 16200 });
+  });
+
+  it("refuses a quantity of zero", async () => {
+    const res = await app.request("GET", "/v1/products/strobe-cap-clip/quote?quantity=0");
+    expect(res.status).toBe(400);
   });
 
   it("filters by category", async () => {

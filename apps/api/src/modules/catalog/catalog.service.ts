@@ -4,9 +4,15 @@ import type {
   ProductPage,
   ProductQuery,
   ProductUpdate,
+  Quote,
+  QuoteQuery,
 } from "@saltmarket/contracts";
 import { conflict, notFound } from "../../platform/http/index.ts";
 import type { CatalogRepository } from "./catalog.repository.ts";
+
+/** Orders of this many units or more get BULK_PERCENT off the whole order. */
+const BULK_MIN = 10;
+const BULK_PERCENT = 10;
 
 export function createCatalogService(repository: CatalogRepository) {
   return {
@@ -21,6 +27,20 @@ export function createCatalogService(repository: CatalogRepository) {
       const product = repository.findBySlug(slug);
       if (!product) throw notFound("Product");
       return product;
+    },
+    quote(slug: string, { quantity }: QuoteQuery): Quote {
+      const product = repository.findBySlug(slug);
+      if (!product) throw notFound("Product");
+      const subtotal = product.priceCents * quantity;
+      const discountCents = quantity > BULK_MIN ? Math.round((subtotal * BULK_PERCENT) / 100) : 0;
+      return {
+        slug,
+        quantity,
+        unitCents: product.priceCents,
+        discountCents,
+        totalCents: subtotal - discountCents,
+        inStock: quantity <= product.stock,
+      };
     },
     create(input: ProductCreate): Product {
       const product = repository.create(input);

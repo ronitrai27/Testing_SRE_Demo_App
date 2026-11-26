@@ -1,4 +1,4 @@
-import { ProductCreate, ProductQuery, ProductUpdate } from "@saltmarket/contracts";
+import { ProductCreate, ProductQuery, ProductUpdate, QuoteQuery } from "@saltmarket/contracts";
 import { type RequestHandler, Router } from "express";
 import type { CatalogService } from "./catalog.service.ts";
 
@@ -9,6 +9,9 @@ export function createCatalogRouter(service: CatalogService, requireAdmin: Reque
     })
     .get("/:slug", (req, res) => {
       res.json(service.get(req.params.slug));
+    })
+    .get("/:slug/quote", (req, res) => {
+      res.json(service.quote(String(req.params.slug), QuoteQuery.parse(req.query)));
     })
     .post("/", requireAdmin, (req, res) => {
       const product = service.create(ProductCreate.parse(req.body));
