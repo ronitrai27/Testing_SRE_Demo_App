@@ -7,6 +7,9 @@ export function createCatalogRouter(service: CatalogService, requireAdmin: Reque
     .get("/", (req, res) => {
       res.json(service.list(ProductQuery.parse(req.query)));
     })
+    .get("/:slug/price", (req, res) => {
+      res.json(service.priceIn(req.params.slug, String(req.query.currency ?? "USD")));
+    })
     .get("/:slug", (req, res) => {
       res.json(service.get(req.params.slug));
     })

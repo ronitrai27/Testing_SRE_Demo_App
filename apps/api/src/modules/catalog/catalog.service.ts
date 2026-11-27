@@ -8,6 +8,15 @@ import type {
 import { conflict, notFound } from "../../platform/http/index.ts";
 import type { CatalogRepository } from "./catalog.repository.ts";
 
+type Rate = { perUsd: number; symbol: string };
+
+/** Display prices for shoppers abroad. Stored prices stay in US cents. */
+const RATES: Record<string, Rate> = {
+  USD: { perUsd: 1, symbol: "$" },
+  EUR: { perUsd: 0.92, symbol: "€" },
+  GBP: { perUsd: 0.79, symbol: "£" },
+};
+
 export function createCatalogService(repository: CatalogRepository) {
   return {
     list(query: ProductQuery): ProductPage {
@@ -21,6 +30,14 @@ export function createCatalogService(repository: CatalogRepository) {
       const product = repository.findBySlug(slug);
       if (!product) throw notFound("Product");
       return product;
+    },
+    /** The product's price shown in the shopper's currency, such as "€41.40". */
+    priceIn(slug: string, currency: string): { slug: string; currency: string; label: string } {
+      const product = repository.findBySlug(slug);
+      if (!product) throw notFound("Product");
+      const code = currency.toUpperCase();
+      const { perUsd, symbol } = RATES[code] as Rate;
+      return { slug, currency: code, label: `${symbol}${((product.priceCents * perUsd) / 100).toFixed(2)}` };
     },
     create(input: ProductCreate): Product {
       const product = repository.create(input);
