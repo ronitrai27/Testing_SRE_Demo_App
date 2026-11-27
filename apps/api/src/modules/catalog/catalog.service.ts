@@ -7,6 +7,10 @@ import type {
 } from "@saltmarket/contracts";
 import { conflict, notFound } from "../../platform/http/index.ts";
 import type { CatalogRepository } from "./catalog.repository.ts";
+import { discounted, sumCents } from "./pricing.ts";
+
+/** Bundles of two or more products get this much off. */
+const BUNDLE_PERCENT_OFF = 10;
 
 type Rate = { perUsd: number; symbol: string };
 
@@ -38,6 +42,16 @@ export function createCatalogService(repository: CatalogRepository) {
       const code = currency.toUpperCase();
       const { perUsd, symbol } = RATES[code] as Rate;
       return { slug, currency: code, label: `${symbol}${((product.priceCents * perUsd) / 100).toFixed(2)}` };
+    },
+    /** Several products bought together, such as "?slugs=tow-float-20l,polarised-goggles". */
+    bundle(slugList: string): { slugs: string[]; totalCents: number; bundleCents: number } {
+      const products = slugList
+        .split(",")
+        .map((slug) => repository.findBySlug(slug))
+        .filter((product): product is Product => product !== undefined);
+      const totalCents = sumCents(products);
+      const bundleCents = products.length > 1 ? discounted(totalCents, BUNDLE_PERCENT_OFF) : totalCents;
+      return { slugs: products.map((product) => product.slug), totalCents, bundleCents };
     },
     create(input: ProductCreate): Product {
       const product = repository.create(input);
